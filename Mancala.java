@@ -13,6 +13,10 @@ public class Mancala {
         MancalaBoard board = new MancalaBoard(model);
         model.attach(board);
         
-        model.update(1, 6); // test with console output
+        // test with console output
+        if (!model.update(2))
+            System.out.println("Invalid move");
+        if (!model.undo())
+            System.out.println("Undo failed (none left)");
     }
 }

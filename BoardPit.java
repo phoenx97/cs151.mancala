@@ -2,11 +2,11 @@
 import java.awt.*;
 
 /**
- *
+ * 
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
  */
-public class PlayerPit implements Pit
+public class BoardPit implements Pit 
 {
 
     @Override
@@ -20,5 +20,5 @@ public class PlayerPit implements Pit
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

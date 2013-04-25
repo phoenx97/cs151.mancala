@@ -2,15 +2,15 @@
 import java.awt.*;
 
 /**
- *
+ * 
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
  */
-public class PlayerPit implements Pit
+public class SquareStone implements Stone
 {
 
     @Override
-    public void setStones(int numStones)
+    public Rectangle getBounds()
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -20,5 +20,5 @@ public class PlayerPit implements Pit
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

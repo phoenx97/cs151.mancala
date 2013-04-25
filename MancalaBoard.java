@@ -13,14 +13,10 @@ public class MancalaBoard extends JFrame implements ChangeListener
 {
     private GameData data;
     private JButton btnUndo;
-    private int currentPlayer;
-    
-    private static final int PLAYER1 = 1;
-    private static final int PLAYER2 = 2;
+    private JLabel lblCurrentPlayer;
     
     public MancalaBoard(GameData data)
     {
-        currentPlayer = 1;
         this.data = data;
         this.setLayout(new BorderLayout());
         
@@ -33,24 +29,18 @@ public class MancalaBoard extends JFrame implements ChangeListener
                 
             }
         });
+        lblCurrentPlayer = new JLabel("Player " + data.getCurrentPlayer() + "'s turn");
+        this.add(lblCurrentPlayer, BorderLayout.PAGE_END);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
     }
     
-    private void playerMove(int currentPlayer, int pitNum)
-    {
-        if (currentPlayer == PLAYER1)
-            currentPlayer = PLAYER2;
-        else
-            currentPlayer = PLAYER2;
-        
-        data.update(currentPlayer, pitNum);
-    }
+    private void playerMove(int pitNum) { data.update(pitNum); }
     
     @Override
     public void stateChanged(ChangeEvent e)
     {
-        
+        lblCurrentPlayer.setText("Player " + data.getCurrentPlayer() + "'s turn");
     }
 }
