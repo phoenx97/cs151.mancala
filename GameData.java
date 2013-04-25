@@ -9,12 +9,13 @@ import javax.swing.event.*;
  */
 public class GameData
 {
-    public static final int PLAYER1_PIT = 0;
+    // indices for player's pits on the array
+    public static final int PLAYER1_PIT = 0; 
     public static final int PLAYER2_PIT = 7;
     
-    private static final int NUM_PITS = 14;
+    private static final int NUM_PITS = 14; // total number of pits
     
-    private int[] pits;
+    private int[] pits; // player1 has pits 1-6, player2 has pits 8-13
     private ArrayList<ChangeListener> listeners;
     
     public GameData(int startingStones)
@@ -38,11 +39,7 @@ public class GameData
     
     public boolean update(int playerNum, int pitNum)
     {
-        /* 
-         * player num and pit have to be on same side (check by GUI?)
-         * player 1 (pit 0) has pits 1-6
-         * player 2 (pit 7) has pits 8-13
-         */
+        // player num and pit have to be on same side (check by GUI?), undo not handled yet
         boolean freeturn = false;
         int opponent;
         int player;
@@ -70,7 +67,7 @@ public class GameData
             
             if (currentPit == opponent)
             {
-                i++; // skip the pit, keep the current i by incrementing
+                i++; // skip the pit, keep the current i
                 currentPit++;
             }
             else
@@ -83,8 +80,6 @@ public class GameData
                 currentPit++;
             }
         }
-        
-        // not sure where undo goes yet
         
         // debug
         System.out.println("New board:");

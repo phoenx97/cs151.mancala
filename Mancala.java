@@ -6,9 +6,12 @@
 public class Mancala {
     public static void main(String[] args)
     {
-        int startingStones = 3;
-        GameData model = new GameData(startingStones);
+        int startingStones = 3; // temp value - will need to get this from GUI prompt
         
-        model.update(1, 6);
+        GameData model = new GameData(startingStones);
+        MancalaBoard board = new MancalaBoard(model);
+        model.attach(board);
+        
+        model.update(1, 6); // test with console output
     }
 }
