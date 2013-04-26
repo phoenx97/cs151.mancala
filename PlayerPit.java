@@ -1,24 +1,29 @@
 
 import java.awt.*;
+import java.awt.geom.*;
 
 /**
  * COPYRIGHT (C) 2013 All Rights Reserved
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
  */
-public class PlayerPit implements Pit
+public class PlayerPit extends Pit
 {
-
-    @Override
-    public void setStones(int numStones)
+    public PlayerPit(int width)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void draw(Graphics2D g)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super(width);
     }
     
+    public void paintIcon(Component c, Graphics g, int x, int y)
+    {
+        Graphics2D g2 = (Graphics2D) g;
+        Ellipse2D.Double pit = new Ellipse2D.Double(x, y, width, width * 2);
+        
+        g2.draw(pit);
+    }
+    
+    public int getIconHeight()
+    {
+        return width * 2;
+    }
 }

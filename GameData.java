@@ -246,7 +246,7 @@ public class GameData
      */
     private int determineWinner()
     {
-        
+        undosLeft = 0;
         if (pits[PLAYER1_PIT] > pits[PLAYER2_PIT])
         {
             System.out.println("Player 1 wins (" + pits[PLAYER1_PIT] + " stones to " + pits[PLAYER2_PIT] + ")"); //debug
