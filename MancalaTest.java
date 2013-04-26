@@ -1,10 +1,10 @@
 
 /**
- * 
+ * COPYRIGHT (C) 2013 All Rights Reserved
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
  */
-public class Mancala {
+public class MancalaTest {
     public static void main(String[] args)
     {
         int startingStones = 3; // temp value - will need to get this from GUI prompt
@@ -14,9 +14,7 @@ public class Mancala {
         model.attach(board);
         
         // test with console output
-        if (!model.update(2))
-            System.out.println("Invalid move");
-        if (!model.undo())
-            System.out.println("Undo failed (none left)");
+        model.update(2);
+        // model.undo();
     }
 }
