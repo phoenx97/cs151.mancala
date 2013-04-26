@@ -14,7 +14,20 @@ public class MancalaTest {
         model.attach(board);
         
         // test with console output
+        model.update(3);
+        model.update(0);
+        model.update(9);
         model.update(2);
-        // model.undo();
+        model.update(1);
+        model.update(8);
+        model.update(2);
+        model.update(9);
+        model.update(3);
+        model.update(7);
+        model.update(5);
+        model.update(7);
+        model.update(4);
+        model.update(7);
+        model.update(5);
     }
 }

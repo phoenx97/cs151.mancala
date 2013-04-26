@@ -10,8 +10,6 @@ import javax.swing.event.*;
  * @version 1.0
  */
 
-// weird case not sorted yet: invalid move followed by undo
-
 public class GameData
 {
     private static final int NUM_PITS = 14;
@@ -37,7 +35,6 @@ public class GameData
 
     /**
      * Constructs the initial game board data
-     * 
      * @param startingStones number of stones in each pit to start the game
      */
     public GameData(int startingStones)
@@ -56,8 +53,7 @@ public class GameData
         
         // debug
         System.out.println("Starting board:");
-        for (int i = 0; i < pits.length; i++)
-            System.out.println(i + ": " + pits[i]);
+        printBoard();
     }
 
     /**
@@ -84,6 +80,7 @@ public class GameData
      */
     public int update(int pitNum)
     {
+        System.out.println("Player " + currentPlayer + " picks pit " + pitNum);
         boolean valid = true;
         int opponent;
         int player;
@@ -152,8 +149,7 @@ public class GameData
         {
             // debug
             System.out.println("Updated board (Player " + currentPlayer + "'s turn):");
-            for (int i = 0; i < pits.length; i++)
-                System.out.println(i + ": " + pits[i]);
+            printBoard();
             
             sendUpdate();
             
@@ -188,8 +184,7 @@ public class GameData
 
             // debug
             System.out.println("Undo performed. Updated board (Player " + currentPlayer + "'s turn):");
-            for (int i = 0; i < pits.length; i++)
-                System.out.println(i + ": " + pits[i]);
+            printBoard();
 
             sendUpdate();
         }
@@ -223,6 +218,8 @@ public class GameData
         // if so, get all the stones from opponent and place them in opponent mancala
         if (sideEmpty)
         {
+            System.out.println("One side is empty..."); //debug
+            
             int p1stones = 0;
             int p2stones = 0;
             
@@ -249,12 +246,23 @@ public class GameData
      */
     private int determineWinner()
     {
+        
         if (pits[PLAYER1_PIT] > pits[PLAYER2_PIT])
+        {
+            System.out.println("Player 1 wins (" + pits[PLAYER1_PIT] + " stones to " + pits[PLAYER2_PIT] + ")"); //debug
             return STATUS_P1_WIN;
+        }
+            
         else if (pits[PLAYER1_PIT] < pits[PLAYER2_PIT])
+        {
+            System.out.println("Player 2 wins (" + pits[PLAYER2_PIT] + " stones to " + pits[PLAYER1_PIT] + ")"); //debug
             return STATUS_P2_WIN;
+        }
         else
+        {
+            System.out.println("Draw (" + pits[PLAYER1_PIT] + " stones each)"); //debug
             return STATUS_DRAW;
+        }
     }
     
     /**
@@ -275,5 +283,20 @@ public class GameData
     {
         for (ChangeListener l : listeners)
                 l.stateChanged(new ChangeEvent(this));
+    }
+    
+    private void printBoard()
+    {
+        // debug method
+        System.out.print("  ");
+        for (int i = PLAYER2_PIT - 1; i > PLAYER1_PIT; i--)
+                System.out.print(pits[i] + " ");
+        
+        System.out.println("\n" + pits[PLAYER2_PIT] + "             " + pits[PLAYER1_PIT]);
+        
+        System.out.print("  ");
+        for (int i = 0; i < PLAYER1_PIT; i++)
+                System.out.print(pits[i] + " ");
+        System.out.println();
     }
 }
