@@ -250,17 +250,20 @@ public class GameData
         if (pits[PLAYER1_PIT] > pits[PLAYER2_PIT])
         {
             System.out.println("Player 1 wins (" + pits[PLAYER1_PIT] + " stones to " + pits[PLAYER2_PIT] + ")"); //debug
+            printBoard();
             return STATUS_P1_WIN;
         }
             
         else if (pits[PLAYER1_PIT] < pits[PLAYER2_PIT])
         {
             System.out.println("Player 2 wins (" + pits[PLAYER2_PIT] + " stones to " + pits[PLAYER1_PIT] + ")"); //debug
+            printBoard();
             return STATUS_P2_WIN;
         }
         else
         {
             System.out.println("Draw (" + pits[PLAYER1_PIT] + " stones each)"); //debug
+            printBoard();
             return STATUS_DRAW;
         }
     }
