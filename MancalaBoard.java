@@ -152,41 +152,6 @@ public class MancalaBoard extends JFrame implements ChangeListener
     }
     
     /**
-     * Selects a pit for player's turn
-     * @param pit the pit to select
-     */
-    private void pickPit(int pit)
-    {
-        int status = data.update(pit);
-        if (status == GameData.STATUS_P1_WIN)
-        {
-            labelCurrentPlayer.setText("Game over. Player 1 wins");
-            labelUndoInfo.setText("");
-            buttonUndo.setVisible(false);
-            JOptionPane.showMessageDialog(this, "Player 1 (" + data.getPlayer1Score() + ") beat Player 2 (" + data.getPlayer2Score() + ")", "Game Over", JOptionPane.PLAIN_MESSAGE);
-        }
-        else if (status == GameData.STATUS_P2_WIN)
-        {
-            labelCurrentPlayer.setText("Game over. Player 2 wins");
-            labelUndoInfo.setText("");
-            buttonUndo.setVisible(false);
-            JOptionPane.showMessageDialog(this, "Player 2 (" + data.getPlayer2Score() + ") beat Player 1 (" + data.getPlayer1Score() + ")", "Game Over", JOptionPane.PLAIN_MESSAGE);
-        }
-        else if (status == GameData.STATUS_DRAW)
-        {
-            labelCurrentPlayer.setText("Game over. Draw");
-            labelUndoInfo.setText("");
-            buttonUndo.setVisible(false);
-            JOptionPane.showMessageDialog(this, "Game ended in a tie", "Game Over", JOptionPane.PLAIN_MESSAGE);
-        }
-    }
-    
-    /**
-     * Attempt to undo the last action
-     */
-    private void undo() { data.undo(); }
-    
-    /**
      * Updates the view when the data changes
      * @param e change event
      */
@@ -259,5 +224,40 @@ public class MancalaBoard extends JFrame implements ChangeListener
             startingStones = 3;
         else if (stonesB.isSelected())
             startingStones = 4;
+    }
+    
+    /**
+     * Attempt to undo the last action
+     */
+    private void undo() { data.undo(); }
+    
+    /**
+     * Selects a pit for player's turn
+     * @param pit the pit to select
+     */
+    private void pickPit(int pit)
+    {
+        int status = data.update(pit);
+        if (status == GameData.STATUS_P1_WIN)
+        {
+            labelCurrentPlayer.setText("Game over. Player 1 wins");
+            labelUndoInfo.setText("");
+            buttonUndo.setVisible(false);
+            JOptionPane.showMessageDialog(this, "Player 1 (" + data.getPlayer1Score() + ") beat Player 2 (" + data.getPlayer2Score() + ")", "Game Over", JOptionPane.PLAIN_MESSAGE);
+        }
+        else if (status == GameData.STATUS_P2_WIN)
+        {
+            labelCurrentPlayer.setText("Game over. Player 2 wins");
+            labelUndoInfo.setText("");
+            buttonUndo.setVisible(false);
+            JOptionPane.showMessageDialog(this, "Player 2 (" + data.getPlayer2Score() + ") beat Player 1 (" + data.getPlayer1Score() + ")", "Game Over", JOptionPane.PLAIN_MESSAGE);
+        }
+        else if (status == GameData.STATUS_DRAW)
+        {
+            labelCurrentPlayer.setText("Game over. Draw");
+            labelUndoInfo.setText("");
+            buttonUndo.setVisible(false);
+            JOptionPane.showMessageDialog(this, "Game ended in a tie", "Game Over", JOptionPane.PLAIN_MESSAGE);
+        }
     }
 }

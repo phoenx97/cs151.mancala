@@ -14,16 +14,10 @@ public class CircleStone implements Stone {
     private int width;
     private ArrayList<Shape> shapes;
     
-    public CircleStone(int width)
-    {
-        this.width = width;
-    }
+    public CircleStone(int width) { this.width = width; }
     
     @Override
-    public void setStones(int numStones)
-    {
-        stones = numStones;
-    }
+    public void setStones(int numStones) { stones = numStones; }
 
     @Override
     public Rectangle getBounds()
@@ -45,8 +39,8 @@ public class CircleStone implements Stone {
         
         for (Shape s : shapes)
         {
-            g2.setPaint(Color.BLACK);
-            g2.setStroke(new BasicStroke(3.0f));
+            g2.setPaint(Color.RED);
+            g2.setStroke(new BasicStroke(1.0f));
             g2.draw(s);
             g2.setPaint(Color.BLUE);
             g2.fill(s);
