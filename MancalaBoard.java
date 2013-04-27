@@ -23,7 +23,7 @@ public class MancalaBoard extends JFrame implements ChangeListener
     {
         this.data = data;
         this.setLayout(new BorderLayout());
-        pits = new CirclePit[GameData.NUM_PITS];
+        pits = new Pit[GameData.NUM_PITS];
         int[] startingData = data.getData();
         
         JPanel panelPits = new JPanel(new GridBagLayout());

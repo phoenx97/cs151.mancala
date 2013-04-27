@@ -1,7 +1,6 @@
 
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.*;
 
 /**
  * COPYRIGHT (C) 2013 All Rights Reserved
@@ -10,15 +9,10 @@ import java.util.*;
  */
 public class CirclePit implements Pit
 {
-    protected int width;
-    protected int stones;
-    protected ArrayList<Shape> shapes;
+    private int width;
+    private int stones;
     
-    public CirclePit(int width)
-    {
-        this.width = width;
-        shapes = new ArrayList<Shape>();
-    }
+    public CirclePit(int width) { this.width = width; }
     
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y)

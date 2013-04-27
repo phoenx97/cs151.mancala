@@ -7,9 +7,12 @@ import java.awt.geom.*;
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
  */
-public class SquarePit extends CirclePit
+public class SquarePit implements Pit
 {
-    public SquarePit(int width) { super(width); }
+    private int width;
+    private int stones;
+    
+    public SquarePit(int width) { this.width = width; }
 
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y)
@@ -21,4 +24,13 @@ public class SquarePit extends CirclePit
         g2.setColor(Color.LIGHT_GRAY);
         g2.drawString(String.valueOf(stones), width / 2, width);
     }
+    
+    @Override
+    public int getIconWidth() { return width; }
+
+    @Override
+    public int getIconHeight() { return width; }
+
+    @Override
+    public void setStones(int numStones) { stones = numStones; }
 }
