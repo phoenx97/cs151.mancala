@@ -4,7 +4,6 @@ import javax.swing.event.*;
 
 /**
  * COPYRIGHT (C) 2013 All Rights Reserved
- * Mancala
  * Data model for the game
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
@@ -138,7 +137,8 @@ public class GameData
                     if (currentPit == player && i == 1) // last stone dropped was in own mancala
                     {
                         freeturn = true;
-                        System.out.println("Stone ended in player mancala. Free turn"); // debug
+                        if (DEBUG)
+                            System.out.println("Stone ended in player mancala. Free turn"); // debug
                     }
                     currentPit++;
                 }
@@ -247,7 +247,8 @@ public class GameData
         // if so, get all the stones from opponent and place them in opponent mancala
         if (sideEmpty)
         {
-            System.out.println("One side is empty..."); //debug
+            if (DEBUG)
+                System.out.println("One side is empty..."); //debug
             
             int p1stones = 0;
             int p2stones = 0;
@@ -331,7 +332,6 @@ public class GameData
      */
     private void printBoard()
     {
-        // debug method
         System.out.print("  ");
         for (int i = PLAYER2_PIT - 1; i > PLAYER1_PIT; i--)
                 System.out.print(pits[i] + " ");

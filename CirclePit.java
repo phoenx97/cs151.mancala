@@ -12,12 +12,17 @@ public class CirclePit implements Pit
 {
     private int width;
     private int stones;
+    private Stone stoneShape;
     
     /**
      * Constructor
      * @param  width width of the pit
      */
-    public CirclePit(int width) { this.width = width; }
+    public CirclePit(Stone stoneShape, int width) 
+    {
+        this.width = width; 
+        this.stoneShape = stoneShape;
+    }
     
     /**
      * Draws the pit
@@ -35,6 +40,7 @@ public class CirclePit implements Pit
         g2.draw(pit);
         g2.setColor(Color.LIGHT_GRAY);
         g2.drawString(String.valueOf(stones), width / 2, width);
+        stoneShape.draw(g2);
     }
     
     /**
@@ -56,5 +62,9 @@ public class CirclePit implements Pit
      * @param numStones number of stones
      */
     @Override
-    public void setStones(int numStones) { stones = numStones; }
+    public void setStones(int numStones) 
+    {
+        stones = numStones;
+        stoneShape.setStones(numStones);
+    }
 }

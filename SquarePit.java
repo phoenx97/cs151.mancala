@@ -12,12 +12,17 @@ public class SquarePit implements Pit
 {
     private int width;
     private int stones;
+    private Stone stoneShape;
     
     /**
      * Constructor
      * @param  width width of the pit
      */
-    public SquarePit(int width) { this.width = width; }
+    public SquarePit(Stone stoneShape, int width) 
+    {
+        this.width = width; 
+        this.stoneShape = stoneShape;
+    }
 
     /**
      * Draws the pit

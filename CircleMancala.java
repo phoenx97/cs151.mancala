@@ -13,14 +13,16 @@ public class CircleMancala implements Pit
     private int width;
     private int height;
     private int stones;
+    private Stone stoneShape;
     
     /**
      * Constructor
      * @param  width width of the pit
      */
-    public CircleMancala(int width) 
+    public CircleMancala(Stone stoneShape, int width) 
     { 
         this.width = width;
+        this.stoneShape = stoneShape;
         height = width * 2;
     }
 
@@ -40,6 +42,7 @@ public class CircleMancala implements Pit
         g2.draw(pit);
         g2.setColor(Color.LIGHT_GRAY);
         g2.drawString(String.valueOf(stones), width / 2, height);
+        stoneShape.draw(g2); // currently broken
     }
 
     /**

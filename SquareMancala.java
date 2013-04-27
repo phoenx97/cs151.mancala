@@ -13,14 +13,16 @@ public class SquareMancala implements Pit
     private int width;
     private int height;
     private int stones;
+    private Stone stoneShape;
     
     /**
      * Constructor
      * @param  width width of the pit
      */
-    public SquareMancala(int width) 
+    public SquareMancala(Stone stoneShape, int width) 
     { 
-        this.width = width; 
+        this.width = width;
+        this.stoneShape = stoneShape;
         height = width * 2;
     }
 
