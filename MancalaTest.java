@@ -10,11 +10,11 @@ public class MancalaTest {
         int startingStones = 3; // temp value - will need to get this from GUI prompt
         
         GameData model = new GameData(startingStones);
-        MancalaBoard board = new MancalaBoard(model);
+        MancalaBoard board = new MancalaBoard(model, startingStones);
         model.attach(board);
         
         // test with console output
-        model.update(3);
+        /*model.update(3);
         model.update(0);
         model.update(9);
         model.update(2);
@@ -28,6 +28,6 @@ public class MancalaTest {
         model.update(7);
         model.update(4);
         model.update(7);
-        model.update(5);
+        model.update(5);*/
     }
 }

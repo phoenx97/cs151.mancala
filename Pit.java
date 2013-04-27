@@ -1,20 +1,23 @@
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import javax.swing.Icon;
+import java.awt.geom.*;
+import java.util.*;
 
 /**
  * COPYRIGHT (C) 2013 All Rights Reserved
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
  */
-public class Pit implements Icon
+public class Pit implements PitStyle
 {
     protected int width;
+    protected int stones;
+    protected ArrayList<Shape> shapes;
     
     public Pit(int width)
     {
         this.width = width;
+        shapes = new ArrayList<Shape>();
     }
     
     @Override
@@ -24,17 +27,16 @@ public class Pit implements Icon
         Ellipse2D.Double pit = new Ellipse2D.Double(x, y, width, width);
         
         g2.draw(pit);
+        g2.setColor(Color.LIGHT_GRAY);
+        g2.drawString(String.valueOf(stones), width / 2, width);
     }
+    
+    @Override
+    public int getIconWidth() { return width; }
 
     @Override
-    public int getIconWidth()
-    {
-        return width;
-    }
+    public int getIconHeight() { return width; }
 
     @Override
-    public int getIconHeight()
-    {
-        return width;
-    }
+    public void setStones(int numStones) { stones = numStones; }
 }

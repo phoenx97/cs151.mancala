@@ -9,11 +9,10 @@ import javax.swing.event.*;
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
  */
-
 public class GameData
 {
-    private static final int NUM_PITS = 14;
-    private static final int MAX_UNDOS = 3;
+    public static final int NUM_PITS = 14;
+    public static final int MAX_UNDOS = 3;
     
     // indices for player's pits on the array
     public static final int PLAYER1_PIT = 6;
@@ -85,12 +84,7 @@ public class GameData
         int opponent;
         int player;
 
-        if (lastPlayerUndo != currentPlayer)
-        {
-            // reset undo counter when next player makes a move
-            lastPlayerUndo = currentPlayer;
-            undosLeft = MAX_UNDOS; 
-        }
+        
 
         if (currentPlayer == PLAYER1)
         {
@@ -112,7 +106,13 @@ public class GameData
         {
             // perform the action
             boolean freeturn = false;
-            lastPits = pits.clone(); // clone list for undo before making any changes
+            if (lastPlayerUndo != currentPlayer)
+            {
+                // reset undo counter when next player makes a move
+                lastPlayerUndo = currentPlayer;
+                undosLeft = MAX_UNDOS; 
+                lastPits = pits.clone(); // clone list for undo before making any changes
+            }
 
             int stones = pits[pitNum];
             int currentPit = pitNum + 1;
@@ -154,7 +154,10 @@ public class GameData
             sendUpdate();
             
             if (gameOver())
+            {
+                sendUpdate();
                 return determineWinner();
+            }
             else
                 return currentPlayer;
         }
@@ -193,6 +196,26 @@ public class GameData
         if (!tempUndoDebug)
             System.out.println("Undo failed - invalid");
         return currentPlayer;
+    }
+    
+    public int getLastPlayerUndo()
+    {
+        return lastPlayerUndo;
+    }
+    
+    public int getUndosLeft()
+    {
+        return undosLeft;
+    }
+    
+    public int getPlayer1Score()
+    {
+        return pits[PLAYER1_PIT];
+    }
+    
+    public int getPlayer2Score()
+    {
+        return pits[PLAYER2_PIT];
     }
     
     /**
