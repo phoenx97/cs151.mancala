@@ -24,6 +24,7 @@ public class SquareMancala implements Pit
         this.width = width;
         this.stoneShape = stoneShape;
         height = width * 2;
+        stoneShape.setMancala();
     }
 
     /**

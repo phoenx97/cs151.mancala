@@ -12,28 +12,41 @@ import java.util.*;
 public class CircleStone implements Stone {
     private int stones;
     private int width;
+    private int max_col;
     private ArrayList<Shape> shapes;
     
-    public CircleStone(int width) { this.width = width; }
+    public CircleStone(int width) { 
+        this.width = width; 
+        max_col = MAX_COL; 
+    }
+    
+    @Override
+    public void setMancala() {
+        max_col = MAX_MANCALA_COL; 
+    }
     
     @Override
     public void setStones(int numStones) { stones = numStones; }
 
     @Override
-    public Rectangle getBounds()
-    {
-        int height = (stones / 4) * width;
-        return new Rectangle(width, height);
-    }
+    public Rectangle getBounds() { return new Rectangle(((stones / max_col) * width), (max_col * width)); }
 
     @Override
     public void draw(Graphics2D g2)
     {
+        int col = 0;
+        int row = 0;
         shapes = new ArrayList<Shape>();
         
         for (int i = 0; i < stones; i++)
         {
-            Ellipse2D.Double stone = new Ellipse2D.Double(0, i * width + 5, width, width); // something not drawing correctly
+            if (row >= max_col)
+            {
+                col++;
+                row = 0;
+            }
+            Ellipse2D.Double stone = new Ellipse2D.Double(col * width, row * width, width, width);
+            row++;
             shapes.add(stone);
         }
         

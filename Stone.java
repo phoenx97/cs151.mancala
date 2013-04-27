@@ -10,6 +10,14 @@ import java.awt.*;
 public interface Stone
 {
     public static final int MAX_COL = 5;
+    public static final int MAX_MANCALA_COL = 10;
+    
+    /**
+     * Sets if the stone is part of a player mancala
+     * @param mancala 
+     */
+    void setMancala();
+    
     /**
      * Sets the number of stones to draw
      * @param numStones number of stones
