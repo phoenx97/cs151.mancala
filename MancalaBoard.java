@@ -6,6 +6,7 @@ import javax.swing.event.*;
 
 /**
  * COPYRIGHT (C) 2013 All Rights Reserved
+ * Frame that contains the game board and all controllers
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
  */
@@ -19,13 +20,25 @@ public class MancalaBoard extends JFrame implements ChangeListener
     private JLabel labelUndoInfo;
     private Pit[] pits;
     
+    /**
+     * Creates the frame
+     * @param data data model
+     * @param startingStones number of stones in each pit to start
+     */
     public MancalaBoard(final GameData data, int startingStones)
     {
-        this.data = data;
         this.setLayout(new BorderLayout());
-        pits = new Pit[GameData.NUM_PITS];
+        this.data = data;
+        this.pits = new Pit[GameData.NUM_PITS];
         int[] startingData = data.getData();
         
+        // header that displays current player
+        JPanel panelHeader = new JPanel(new FlowLayout());
+        labelCurrentPlayer = new JLabel("Player " + data.getCurrentPlayer() + "'s turn");
+        labelCurrentPlayer.setFont(new Font("Dialog", Font.BOLD, 24));
+        panelHeader.add(labelCurrentPlayer);
+        
+        // actual board panel
         JPanel panelPits = new JPanel(new GridBagLayout());
         GridBagConstraints pitConstraints = new GridBagConstraints();
         pitConstraints.ipadx = 10;
@@ -48,7 +61,6 @@ public class MancalaBoard extends JFrame implements ChangeListener
             pits[j--] = tempPit;
         }
         pitConstraints.gridy = 1;
-        
         for (int i = 0; i < GameData.PLAYER1_PIT; i++)
         {
             Pit tempPit = new CirclePit(PIT_SIZE);
@@ -67,8 +79,8 @@ public class MancalaBoard extends JFrame implements ChangeListener
         pitConstraints.gridy = 0;
         pitConstraints.gridx = 0;
         pitConstraints.gridheight = 2;
-        Pit player1Pit = new CirclePlayerPit(PIT_SIZE);
-        Pit player2Pit = new CirclePlayerPit(PIT_SIZE);
+        Pit player1Pit = new CircleMancala(PIT_SIZE);
+        Pit player2Pit = new CircleMancala(PIT_SIZE);
         pits[GameData.PLAYER1_PIT] = player1Pit;
         pits[GameData.PLAYER2_PIT] = player2Pit;
         JLabel lblPlayer1Pit = new JLabel(player1Pit);
@@ -79,11 +91,7 @@ public class MancalaBoard extends JFrame implements ChangeListener
         for (int i = 0; i < pits.length; i ++)
             pits[i].setStones(startingData[i]);
         
-        JPanel panelHeader = new JPanel(new FlowLayout());
-        labelCurrentPlayer = new JLabel("Player " + data.getCurrentPlayer() + "'s turn");
-        labelCurrentPlayer.setFont(new Font("Dialog", Font.BOLD, 24));
-        panelHeader.add(labelCurrentPlayer);
-        
+        // status panel at the bottom for undo
         JPanel panelStatus = new JPanel(new FlowLayout());
         labelUndoInfo = new JLabel(data.getUndosLeft() + " undos left for Player " + data.getLastPlayerUndo());
         buttonUndo = new JButton("Undo");
@@ -104,10 +112,13 @@ public class MancalaBoard extends JFrame implements ChangeListener
         this.setVisible(true);
     }
     
+    /**
+     * Selects a pit for player's turn
+     * @param pit the pit to select
+     */
     private void pickPit(int pit)
     {
         int status = data.update(pit);
-        System.out.println("Status returned: " + status);
         if (status == GameData.STATUS_P1_WIN)
         {
             labelCurrentPlayer.setText("Game over. Player 1 wins");
@@ -131,8 +142,15 @@ public class MancalaBoard extends JFrame implements ChangeListener
         }
     }
     
+    /**
+     * Attempt to undo the last action
+     */
     private void undo() { data.undo(); }
     
+    /**
+     * Updates the view when the data changes
+     * @param e change event
+     */
     @Override
     public void stateChanged(ChangeEvent e)
     {

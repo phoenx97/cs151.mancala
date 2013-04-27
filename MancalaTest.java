@@ -1,6 +1,7 @@
 
 /**
  * COPYRIGHT (C) 2013 All Rights Reserved
+ * Runs the Mancala prorgram
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
  */
@@ -13,8 +14,8 @@ public class MancalaTest {
         MancalaBoard board = new MancalaBoard(model, startingStones);
         model.attach(board);
         
-        // test with console output
-        /*model.update(3);
+        /* test using console output
+        model.update(3);
         model.update(0);
         model.update(9);
         model.update(2);
@@ -28,6 +29,7 @@ public class MancalaTest {
         model.update(7);
         model.update(4);
         model.update(7);
-        model.update(5);*/
+        model.update(5);
+        */
     }
 }

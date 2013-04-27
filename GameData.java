@@ -25,13 +25,15 @@ public class GameData
     public static final int STATUS_P2_WIN = 4;
     public static final int STATUS_DRAW = 5;
     
+    private static final boolean DEBUG = false;
+    
     private int[] pits; // player 1 has pits 0-5, player 2 has pits 7-12
     private int[] lastPits; // last instance of the board before a move
     private int currentPlayer;
     private int undosLeft;
     private int lastPlayerUndo;
     private ArrayList<ChangeListener> listeners;
-
+    
     /**
      * Constructs the initial game board data
      * @param startingStones number of stones in each pit to start the game
@@ -50,9 +52,11 @@ public class GameData
 
         lastPits = pits.clone();
         
-        // debug
-        System.out.println("Starting board:");
-        printBoard();
+        if (DEBUG)
+        {
+            System.out.println("Starting board:");
+            printBoard();
+        }
     }
 
     /**
@@ -79,11 +83,12 @@ public class GameData
      */
     public int update(int pitNum)
     {
-        System.out.println("Player " + currentPlayer + " picks pit " + pitNum);
+        if (DEBUG)
+            System.out.println("Player " + currentPlayer + " picks pit " + pitNum);
+        
         boolean valid = true;
         int opponent;
         int player;
-        
 
         if (currentPlayer == PLAYER1)
         {
@@ -115,7 +120,6 @@ public class GameData
 
             int stones = pits[pitNum];
             int currentPit = pitNum + 1;
-
             pits[pitNum] = 0;
 
             for (int i = stones; i > 0; i--)
@@ -152,16 +156,18 @@ public class GameData
         
         if (valid)
         {
-            // debug
-            System.out.println("Updated board (Player " + currentPlayer + "'s turn):");
-            printBoard();
-            
+            if (DEBUG)
+            {
+                System.out.println("Updated board (Player " + currentPlayer + "'s turn):");
+                printBoard();
+            }
             sendUpdate();
             return currentPlayer;
         }
         else
         {
-            System.out.println("Invalid move"); // debug
+            if (DEBUG)
+                System.out.println("Invalid move");
             return INVALID;
         }
     }
@@ -172,36 +178,48 @@ public class GameData
      */
     public int undo()
     {
-        boolean tempUndoDebug = false; // get rid of this later, obviously
-        
         if (undosLeft > 0 && !Arrays.equals(lastPits, pits)) // make sure player has undos left and no consecutive undos allowed
         {
-            tempUndoDebug = true; // get rid of this later, obviously
-            
             pits = lastPits;
             if (lastPlayerUndo != currentPlayer) // case where player got last stone in own mancala
                 nextPlayer();
             undosLeft--;
 
-            // debug
-            System.out.println("Undo performed. Updated board (Player " + currentPlayer + "'s turn):");
-            printBoard();
-
+            if (DEBUG)
+            {
+                System.out.println("Undo performed. Updated board (Player " + currentPlayer + "'s turn):");
+                printBoard();
+            }
             sendUpdate();
         }
-        
-        //debug
-        if (!tempUndoDebug)
+        else if (DEBUG)
             System.out.println("Undo failed - invalid");
+            
         return currentPlayer;
     }
     
+    /**
+     * Gets the previous player that performed an undo
+     * @return player number
+     */
     public int getLastPlayerUndo() { return lastPlayerUndo; }
     
+    /**
+     * Gets the number of undos remaining
+     * @return remaining undos
+     */
     public int getUndosLeft() { return undosLeft; }
     
+    /**
+     * Gets player 1's score
+     * @return number of stones in player 1's mancala
+     */
     public int getPlayer1Score() { return pits[PLAYER1_PIT]; }
     
+    /**
+     * Gets player 2's score
+     * @return number of stones in player 2's mancala
+     */
     public int getPlayer2Score() { return pits[PLAYER2_PIT]; }
     
     /**
@@ -260,21 +278,30 @@ public class GameData
         undosLeft = 0;
         if (pits[PLAYER1_PIT] > pits[PLAYER2_PIT])
         {
-            System.out.println("Player 1 wins (" + pits[PLAYER1_PIT] + " stones to " + pits[PLAYER2_PIT] + ")"); //debug
-            printBoard();
+            if (DEBUG)
+            {
+                System.out.println("Player 1 wins (" + pits[PLAYER1_PIT] + " stones to " + pits[PLAYER2_PIT] + ")");
+                printBoard();
+            }
             return STATUS_P1_WIN;
         }
             
         else if (pits[PLAYER1_PIT] < pits[PLAYER2_PIT])
         {
-            System.out.println("Player 2 wins (" + pits[PLAYER2_PIT] + " stones to " + pits[PLAYER1_PIT] + ")"); //debug
-            printBoard();
+            if (DEBUG)
+            {
+                System.out.println("Player 2 wins (" + pits[PLAYER2_PIT] + " stones to " + pits[PLAYER1_PIT] + ")"); //debug
+                printBoard();
+            }
             return STATUS_P2_WIN;
         }
         else
         {
-            System.out.println("Draw (" + pits[PLAYER1_PIT] + " stones each)"); //debug
-            printBoard();
+            if (DEBUG)
+            {
+                System.out.println("Draw (" + pits[PLAYER1_PIT] + " stones each)"); //debug
+                printBoard();
+            }
             return STATUS_DRAW;
         }
     }
@@ -299,6 +326,9 @@ public class GameData
                 l.stateChanged(new ChangeEvent(this));
     }
     
+    /**
+     * Debug method to print out the current board to the console
+     */
     private void printBoard()
     {
         // debug method

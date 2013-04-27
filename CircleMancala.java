@@ -4,21 +4,26 @@ import java.awt.geom.*;
 
 /**
  * COPYRIGHT (C) 2013 All Rights Reserved
- * Circle shaped pit
+ * Ellipse shaped player mancala
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
  */
-public class CirclePit implements Pit
+public class CircleMancala implements Pit
 {
     private int width;
+    private int height;
     private int stones;
     
     /**
      * Constructor
      * @param  width width of the pit
      */
-    public CirclePit(int width) { this.width = width; }
-    
+    public CircleMancala(int width) 
+    { 
+        this.width = width;
+        height = width * 2;
+    }
+
     /**
      * Draws the pit
      * @param c component
@@ -30,13 +35,13 @@ public class CirclePit implements Pit
     public void paintIcon(Component c, Graphics g, int x, int y)
     {
         Graphics2D g2 = (Graphics2D) g;
-        Ellipse2D.Double pit = new Ellipse2D.Double(x, y, width, width);
+        Ellipse2D.Double pit = new Ellipse2D.Double(x, y, width, height);
         
         g2.draw(pit);
         g2.setColor(Color.LIGHT_GRAY);
-        g2.drawString(String.valueOf(stones), width / 2, width);
+        g2.drawString(String.valueOf(stones), width / 2, height);
     }
-    
+
     /**
      * Gets the width of the pit
      * @return width
@@ -49,7 +54,7 @@ public class CirclePit implements Pit
      * @return height
      */
     @Override
-    public int getIconHeight() { return width; }
+    public int getIconHeight() { return height; }
 
     /**
      * Sets the number of stones in the pit
