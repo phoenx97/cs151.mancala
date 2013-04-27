@@ -37,7 +37,7 @@ public class GameData
      * Constructs the initial game board data
      * @param startingStones number of stones in each pit to start the game
      */
-    public GameData(int startingStones)
+    public GameData()
     {
         pits = new int[NUM_PITS];
         currentPlayer = 1;
@@ -46,9 +46,7 @@ public class GameData
         listeners = new ArrayList<ChangeListener>();
 
         for (int i = 0; i < pits.length; i++)
-            if (i != PLAYER1_PIT && i != PLAYER2_PIT)
-                pits[i] = startingStones;
-
+            pits[i] = 0;
         lastPits = pits.clone();
         
         if (DEBUG)
@@ -58,6 +56,14 @@ public class GameData
         }
     }
 
+    public void setStartingStones(int startingStones)
+    {
+        for (int i = 0; i < pits.length; i++)
+            if (i != PLAYER1_PIT && i != PLAYER2_PIT)
+                pits[i] = startingStones;
+        lastPits = pits.clone();
+    }
+    
     /**
      * Gets the board
      * @return array representing the mancala board

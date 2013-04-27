@@ -15,22 +15,42 @@ public class MancalaBoard extends JFrame implements ChangeListener
     private static final int PIT_SIZE = 100;
     private static final int STONE_SIZE = 15;
     
+    private Pit[] pits;
     private GameData data;
     private JButton buttonUndo;
     private JLabel labelCurrentPlayer;
     private JLabel labelUndoInfo;
-    private Pit[] pits;
+    private JDialog optionsDialog;
+    private JRadioButton styleA;
+    private JRadioButton styleB;
+    private JRadioButton stonesA;
+    private JRadioButton stonesB;
+    private int startingStones;
+    private int style;
     
     /**
      * Creates the frame
      * @param data data model
      * @param startingStones number of stones in each pit to start
      */
-    public MancalaBoard(final GameData data, int startingStones)
+    public MancalaBoard(final GameData data)
     {
+        // prompt for options. still have to handle styles later
+        optionsDialog = new JDialog(this, "Options", Dialog.ModalityType.DOCUMENT_MODAL);
+        optionsDialog.getContentPane().add(createOptionsPane());
+        optionsDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        optionsDialog.addWindowListener(new WindowAdapter() 
+        {
+            @Override
+            public void windowClosing(WindowEvent evt) { setOptions(); } // handle if user presses X to close instead of the button
+        });
+        optionsDialog.pack();
+        optionsDialog.setVisible(true);
+        
         this.setLayout(new BorderLayout());
         this.data = data;
         this.pits = new Pit[GameData.NUM_PITS];
+        data.setStartingStones(startingStones);
         int[] startingData = data.getData();
         
         // header that displays current player
@@ -48,7 +68,11 @@ public class MancalaBoard extends JFrame implements ChangeListener
         int j = GameData.PLAYER2_PIT - 1;
         for (int i = 0; i < GameData.PLAYER1_PIT; i++)
         {
-            Pit tempPit = new CirclePit(new CircleStone(STONE_SIZE), PIT_SIZE);
+            Pit tempPit;
+            if (style == 1)
+                tempPit = new CirclePit(new CircleStone(STONE_SIZE), PIT_SIZE);
+            else
+                tempPit = new SquarePit(new CircleStone(STONE_SIZE), PIT_SIZE);
             pitConstraints.gridx = i + 1;
             JLabel lbl = new JLabel(tempPit);
             
@@ -64,7 +88,11 @@ public class MancalaBoard extends JFrame implements ChangeListener
         pitConstraints.gridy = 1;
         for (int i = 0; i < GameData.PLAYER1_PIT; i++)
         {
-            Pit tempPit = new CirclePit(new CircleStone(STONE_SIZE), PIT_SIZE);
+            Pit tempPit;
+            if (style == 1)
+                tempPit = new CirclePit(new CircleStone(STONE_SIZE), PIT_SIZE);
+            else
+                tempPit = new SquarePit(new CircleStone(STONE_SIZE), PIT_SIZE);
             pitConstraints.gridx = i + 1;
             JLabel lbl = new JLabel(tempPit);
             
@@ -80,8 +108,18 @@ public class MancalaBoard extends JFrame implements ChangeListener
         pitConstraints.gridy = 0;
         pitConstraints.gridx = 0;
         pitConstraints.gridheight = 2;
-        Pit player1Pit = new CircleMancala(new CircleStone(STONE_SIZE), PIT_SIZE);
-        Pit player2Pit = new CircleMancala(new CircleStone(STONE_SIZE), PIT_SIZE);
+        Pit player1Pit;
+        Pit player2Pit;
+        if (style == 1)
+        {
+            player1Pit = new CircleMancala(new CircleStone(STONE_SIZE), PIT_SIZE);
+            player2Pit = new CircleMancala(new CircleStone(STONE_SIZE), PIT_SIZE);
+        }
+        else
+        {
+            player1Pit = new SquareMancala(new CircleStone(STONE_SIZE), PIT_SIZE);
+            player2Pit = new SquareMancala(new CircleStone(STONE_SIZE), PIT_SIZE);
+        }
         pits[GameData.PLAYER1_PIT] = player1Pit;
         pits[GameData.PLAYER2_PIT] = player2Pit;
         JLabel lblPlayer1Pit = new JLabel(player1Pit);
@@ -165,5 +203,61 @@ public class MancalaBoard extends JFrame implements ChangeListener
         else
             buttonUndo.setEnabled(true);
         repaint();
+    }
+
+    /**
+     * Creates the options pane inside the dialog
+     * @return panel with the options
+     */
+    private Container createOptionsPane()
+    {
+        JPanel optionsPanel = new JPanel(new BorderLayout());
+        JPanel stylePanel = new JPanel();
+        styleA = new JRadioButton("Style A", true);
+        styleB = new JRadioButton("Style B", false);
+        ButtonGroup styleGroup = new ButtonGroup();
+        styleGroup.add(styleA);
+        styleGroup.add(styleB);
+        stylePanel.setBorder(BorderFactory.createTitledBorder("Style"));
+        stylePanel.add(styleA);
+        stylePanel.add(styleB);
+        JPanel stonesPanel = new JPanel();
+        stonesPanel.setLayout(new BoxLayout(stonesPanel, BoxLayout.Y_AXIS));
+        stonesA = new JRadioButton("3 stones", true);
+        stonesB = new JRadioButton("4 stones", false);
+        ButtonGroup stoneGroup = new ButtonGroup();
+        stoneGroup.add(stonesA);
+        stoneGroup.add(stonesB);
+        stonesPanel.setBorder(BorderFactory.createTitledBorder("Initial Stones"));
+        stonesPanel.add(stonesA);
+        stonesPanel.add(stonesB);
+        JButton acceptOptions = new JButton("Start");
+        acceptOptions.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                setOptions();
+                optionsDialog.dispose();
+            }
+        });
+        optionsPanel.add(stylePanel, BorderLayout.PAGE_START);
+        optionsPanel.add(stonesPanel, BorderLayout.CENTER);
+        optionsPanel.add(acceptOptions, BorderLayout.PAGE_END);
+        return optionsPanel;
+    }
+    
+    /**
+     * Sets the style and starting stones based on the dialog
+     */
+    private void setOptions()
+    {
+        if (styleA.isSelected())
+            style = 1;
+        if (styleB.isSelected())
+            style = 2;
+        if (stonesA.isSelected())
+            startingStones = 3;
+        else if (stonesB.isSelected())
+            startingStones = 4;
     }
 }

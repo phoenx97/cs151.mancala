@@ -42,6 +42,7 @@ public class SquareMancala implements Pit
         g2.draw(pit);
         g2.setColor(Color.LIGHT_GRAY);
         g2.drawString(String.valueOf(stones), width / 2, height);
+        stoneShape.draw(g2);
     }
     
     /**
@@ -63,5 +64,9 @@ public class SquareMancala implements Pit
      * @param numStones number of stones
      */
     @Override
-    public void setStones(int numStones) { stones = numStones; }
+    public void setStones(int numStones) 
+    {
+        stones = numStones;
+        stoneShape.setStones(numStones);
+    }
 }

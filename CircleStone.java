@@ -29,7 +29,6 @@ public class CircleStone implements Stone {
     public Rectangle getBounds()
     {
         int height = (stones / 4) * width;
-        
         return new Rectangle(width, height);
     }
 
