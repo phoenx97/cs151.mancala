@@ -7,7 +7,7 @@ import java.awt.geom.*;
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
  */
-public class SquarePlayerPit extends Pit 
+public class SquarePlayerPit extends CirclePit 
 {
     public SquarePlayerPit(int width) { super(width); }
 

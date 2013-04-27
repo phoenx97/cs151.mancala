@@ -23,8 +23,7 @@ public class MancalaBoard extends JFrame implements ChangeListener
     {
         this.data = data;
         this.setLayout(new BorderLayout());
-        pits = new Pit[GameData.NUM_PITS];
-        
+        pits = new CirclePit[GameData.NUM_PITS];
         int[] startingData = data.getData();
         
         JPanel panelPits = new JPanel(new GridBagLayout());
@@ -35,7 +34,7 @@ public class MancalaBoard extends JFrame implements ChangeListener
         int j = GameData.PLAYER2_PIT - 1;
         for (int i = 0; i < GameData.PLAYER1_PIT; i++)
         {
-            Pit tempPit = new Pit(PIT_SIZE);
+            Pit tempPit = new CirclePit(PIT_SIZE);
             pitConstraints.gridx = i + 1;
             JLabel lbl = new JLabel(tempPit);
             
@@ -52,7 +51,7 @@ public class MancalaBoard extends JFrame implements ChangeListener
         
         for (int i = 0; i < GameData.PLAYER1_PIT; i++)
         {
-            Pit tempPit = new Pit(PIT_SIZE);
+            Pit tempPit = new CirclePit(PIT_SIZE);
             pitConstraints.gridx = i + 1;
             JLabel lbl = new JLabel(tempPit);
             
@@ -68,8 +67,8 @@ public class MancalaBoard extends JFrame implements ChangeListener
         pitConstraints.gridy = 0;
         pitConstraints.gridx = 0;
         pitConstraints.gridheight = 2;
-        Pit player1Pit = new PlayerPit(PIT_SIZE);
-        Pit player2Pit = new PlayerPit(PIT_SIZE);
+        Pit player1Pit = new CirclePlayerPit(PIT_SIZE);
+        Pit player2Pit = new CirclePlayerPit(PIT_SIZE);
         pits[GameData.PLAYER1_PIT] = player1Pit;
         pits[GameData.PLAYER2_PIT] = player2Pit;
         JLabel lblPlayer1Pit = new JLabel(player1Pit);
@@ -108,6 +107,7 @@ public class MancalaBoard extends JFrame implements ChangeListener
     private void pickPit(int pit)
     {
         int status = data.update(pit);
+        System.out.println("Status returned: " + status);
         if (status == GameData.STATUS_P1_WIN)
         {
             labelCurrentPlayer.setText("Game over. Player 1 wins");
@@ -141,6 +141,10 @@ public class MancalaBoard extends JFrame implements ChangeListener
             pits[i].setStones(board[i]);
         labelCurrentPlayer.setText("Player " + data.getCurrentPlayer() + "'s turn");
         labelUndoInfo.setText(data.getUndosLeft() + " undos left for Player " + data.getLastPlayerUndo());
+        if (data.getUndosLeft() == 0)
+            buttonUndo.setEnabled(false);
+        else
+            buttonUndo.setEnabled(true);
         repaint();
     }
 }

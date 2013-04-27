@@ -83,7 +83,6 @@ public class GameData
         boolean valid = true;
         int opponent;
         int player;
-
         
 
         if (currentPlayer == PLAYER1)
@@ -110,9 +109,9 @@ public class GameData
             {
                 // reset undo counter when next player makes a move
                 lastPlayerUndo = currentPlayer;
-                undosLeft = MAX_UNDOS; 
-                lastPits = pits.clone(); // clone list for undo before making any changes
+                undosLeft = MAX_UNDOS;
             }
+            lastPits = pits.clone(); // clone list for undo before making any changes
 
             int stones = pits[pitNum];
             int currentPit = pitNum + 1;
@@ -141,6 +140,12 @@ public class GameData
                 }
             }
             
+            if (gameOver())
+            {
+                sendUpdate();
+                return determineWinner();
+            }
+            
             if (!freeturn) // don't change players if last stone ended in player's mancala
                 nextPlayer();
         }
@@ -152,14 +157,7 @@ public class GameData
             printBoard();
             
             sendUpdate();
-            
-            if (gameOver())
-            {
-                sendUpdate();
-                return determineWinner();
-            }
-            else
-                return currentPlayer;
+            return currentPlayer;
         }
         else
         {
@@ -198,25 +196,13 @@ public class GameData
         return currentPlayer;
     }
     
-    public int getLastPlayerUndo()
-    {
-        return lastPlayerUndo;
-    }
+    public int getLastPlayerUndo() { return lastPlayerUndo; }
     
-    public int getUndosLeft()
-    {
-        return undosLeft;
-    }
+    public int getUndosLeft() { return undosLeft; }
     
-    public int getPlayer1Score()
-    {
-        return pits[PLAYER1_PIT];
-    }
+    public int getPlayer1Score() { return pits[PLAYER1_PIT]; }
     
-    public int getPlayer2Score()
-    {
-        return pits[PLAYER2_PIT];
-    }
+    public int getPlayer2Score() { return pits[PLAYER2_PIT]; }
     
     /**
      * Game is over when one player's pits (not including their mancala) are empty
@@ -226,7 +212,8 @@ public class GameData
     {
         // check if either player's side has all empty pits
         boolean sideEmpty = true;
-        if (currentPlayer == PLAYER1)
+
+        if (currentPlayer == 1)
         {
             for (int i = 0; i < PLAYER1_PIT && sideEmpty; i++)
                 if (pits[i] != 0)
@@ -238,6 +225,7 @@ public class GameData
                 if (pits[i] != 0)
                     sideEmpty = false;
         }
+        
         // if so, get all the stones from opponent and place them in opponent mancala
         if (sideEmpty)
         {
