@@ -10,7 +10,7 @@ import java.awt.*;
 public interface Stone
 {
     public static final int MAX_COL = 4;
-    public static final int MAX_MANCALA_COL = 10;
+    public static final int MAX_MANCALA_COL = 9;
     
     /**
      * Sets if the stone set is part of a player mancala

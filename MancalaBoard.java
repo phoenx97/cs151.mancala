@@ -139,6 +139,7 @@ public class MancalaBoard extends JFrame implements ChangeListener
             @Override
             public void actionPerformed(ActionEvent e) { undo(); }
         });
+        buttonUndo.setEnabled(false);
         panelStatus.add(labelUndoInfo);
         panelStatus.add(buttonUndo);
         
