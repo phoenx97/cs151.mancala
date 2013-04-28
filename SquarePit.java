@@ -36,10 +36,21 @@ public class SquarePit implements Pit
     {
         Graphics2D g2 = (Graphics2D) g;
         Rectangle2D.Double pit = new Rectangle2D.Double(x, y, width, width);
+
+        GradientPaint p = new GradientPaint(0, 0, new Color(150, 190, 210), 0, width, new Color(110, 150, 170));
         
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
+        g2.setPaint(p);
+        g2.fill(pit);
+        g2.setPaint(Color.GRAY);
+        g2.setStroke(new BasicStroke(1.0f));
         g2.draw(pit);
+        
         g2.setColor(Color.LIGHT_GRAY);
         g2.drawString(String.valueOf(stones), width / 2, width);
+        
+        g2.translate(width / Stone.MAX_COL, width / Stone.MAX_COL);
         stoneShape.draw(g2);
     }
     

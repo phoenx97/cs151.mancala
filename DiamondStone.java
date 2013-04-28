@@ -8,12 +8,12 @@ import java.awt.geom.*;
  * @author Loveleen Kaur, Peter Le, Lashkar Singh
  * @version 1.0
  */
-public class CircleStone implements Stone {
+public class DiamondStone implements Stone {
     private int stones;
     private int width;
     private int max_col;
     
-    public CircleStone(int width) { 
+    public DiamondStone(int width) { 
         this.width = width; 
         max_col = MAX_COL; 
     }
@@ -40,15 +40,18 @@ public class CircleStone implements Stone {
                 col++;
                 row = 0;
             }
-            Ellipse2D.Double stone = new Ellipse2D.Double(col * width, row * width, width, width);
-
-            Color[] colors = {new Color(150, 190, 210), new Color(0, 70, 150)};
-            float[] dist = {0.0f, 0.8f};
-            RadialGradientPaint p = new RadialGradientPaint(new Point2D.Float((width / 3) + (col * width), (width / 3) + (row * width)), width / 2, dist, colors);
+            Polygon stone = new Polygon();
+            stone.addPoint((col * width), (row * width) + (width / 2));
+            stone.addPoint((col * width) + (width / 2), (row * width) + width);
+            stone.addPoint((col * width) + width, (row * width) + (width / 2));
+            stone.addPoint((col * width) + (width / 2), (row * width));
+            
+            GradientPaint p = new GradientPaint(0, 0, new Color(255, 0, 0), 0, width, new Color(130, 0, 0)); // fix this later
+            
             g2.setPaint(p);
             g2.fill(stone);
             g2.setPaint(Color.BLACK);
-            g2.setStroke(new BasicStroke(1.0f));
+            g2.setStroke(new BasicStroke(0.5f));
             g2.draw(stone);
             
             row++;

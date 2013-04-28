@@ -13,7 +13,7 @@ import javax.swing.event.*;
 public class MancalaBoard extends JFrame implements ChangeListener
 {
     private static final int PIT_SIZE = 100;
-    private static final int STONE_SIZE = 15;
+    private static final int STONE_SIZE = 16;
     
     private Pit[] pits;
     private GameData data;
@@ -72,7 +72,7 @@ public class MancalaBoard extends JFrame implements ChangeListener
             if (style == 1)
                 tempPit = new CirclePit(new CircleStone(STONE_SIZE), PIT_SIZE);
             else
-                tempPit = new SquarePit(new CircleStone(STONE_SIZE), PIT_SIZE);
+                tempPit = new SquarePit(new DiamondStone(STONE_SIZE), PIT_SIZE);
             pitConstraints.gridx = i + 1;
             JLabel lbl = new JLabel(tempPit);
             
@@ -92,7 +92,7 @@ public class MancalaBoard extends JFrame implements ChangeListener
             if (style == 1)
                 tempPit = new CirclePit(new CircleStone(STONE_SIZE), PIT_SIZE);
             else
-                tempPit = new SquarePit(new CircleStone(STONE_SIZE), PIT_SIZE);
+                tempPit = new SquarePit(new DiamondStone(STONE_SIZE), PIT_SIZE);
             pitConstraints.gridx = i + 1;
             JLabel lbl = new JLabel(tempPit);
             
@@ -117,8 +117,8 @@ public class MancalaBoard extends JFrame implements ChangeListener
         }
         else
         {
-            player1Pit = new SquareMancala(new CircleStone(STONE_SIZE), PIT_SIZE);
-            player2Pit = new SquareMancala(new CircleStone(STONE_SIZE), PIT_SIZE);
+            player1Pit = new SquareMancala(new DiamondStone(STONE_SIZE), PIT_SIZE);
+            player2Pit = new SquareMancala(new DiamondStone(STONE_SIZE), PIT_SIZE);
         }
         pits[GameData.PLAYER1_PIT] = player1Pit;
         pits[GameData.PLAYER2_PIT] = player2Pit;

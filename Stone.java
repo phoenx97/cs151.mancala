@@ -9,11 +9,11 @@ import java.awt.*;
  */
 public interface Stone
 {
-    public static final int MAX_COL = 5;
+    public static final int MAX_COL = 4;
     public static final int MAX_MANCALA_COL = 10;
     
     /**
-     * Sets if the stone is part of a player mancala
+     * Sets if the stone set is part of a player mancala
      * @param mancala 
      */
     void setMancala();
