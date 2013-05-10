@@ -55,7 +55,11 @@ public class GameData
             printBoard();
         }
     }
-
+    
+    /**
+     * Sets the number of starting stones in each pit
+     * @param startingStones number of stones
+     */
     public void setStartingStones(int startingStones)
     {
         for (int i = 0; i < pits.length; i++)
@@ -75,6 +79,7 @@ public class GameData
      * @return the current player
      */
     public int getCurrentPlayer() { return currentPlayer; }
+    
     /**
      * Attaches a listener to this model
      * @param c listener to add
@@ -145,6 +150,19 @@ public class GameData
                         freeturn = true;
                         if (DEBUG)
                             System.out.println("Stone ended in player mancala. Free turn"); // debug
+                    }
+                    if (i == 1 && pits[currentPit] == 1)
+                    {
+                        if (currentPlayer == PLAYER1)
+                        {
+                            pits[PLAYER1_PIT] += pits[PLAYER2_PIT - currentPit - 1];
+                            pits[PLAYER2_PIT - currentPit - 1] = 0;
+                        }
+                        else
+                        {
+                            pits[PLAYER2_PIT] += pits[PLAYER2_PIT - currentPit - 1];
+                            pits[PLAYER2_PIT - currentPit - 1] = 0;
+                        }
                     }
                     currentPit++;
                 }
@@ -330,7 +348,7 @@ public class GameData
     private void sendUpdate()
     {
         for (ChangeListener l : listeners)
-                l.stateChanged(new ChangeEvent(this));
+            l.stateChanged(new ChangeEvent(this));
     }
     
     /**
